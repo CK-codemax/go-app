@@ -47,5 +47,12 @@ jobs:
         ECR_REPOSITORY: ${{ github.repository }}
         IMAGE_TAG: ${{ steps.release.outputs.new-tag }}
       run: |
-        docker build -t go-app:$IMAGE_TAG .
-        docker push go-app:$IMAGE_TAG
+        # Convert repository name to lowercase to satisfy ECR naming rules
+        REPO_NAME=$(echo "$ECR_REPOSITORY" | tr '[:upper:]' '[:lower:]')
+
+        echo "ECR Registry: $ECR_REGISTRY"
+        echo "ECR Repository: $REPO_NAME"
+        echo "Image Tag: $IMAGE_TAG"
+
+        docker build -t $ECR_REGISTRY/$REPO_NAME:$IMAGE_TAG .
+        docker push $ECR_REGISTRY/$REPO_NAME:$IMAGE_TAG
