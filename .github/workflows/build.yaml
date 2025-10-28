@@ -47,5 +47,5 @@ jobs:
         ECR_REPOSITORY: ${{ github.repository }}
         IMAGE_TAG: ${{ steps.release.outputs.new-tag }}
       run: |
-        docker build -t go-app/$ECR_REPOSITORY:$IMAGE_TAG .
-        docker push go-app/$ECR_REPOSITORY:$IMAGE_TAG
+        docker build -t go-app:$IMAGE_TAG .
+        docker push go-app:$IMAGE_TAG
